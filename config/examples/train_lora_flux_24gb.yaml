@@ -2,7 +2,7 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "my_first_flux_lora_v1"
+  name: "sptgn-mask-lora"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
@@ -12,15 +12,15 @@ config:
       device: cuda:0
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
-#      trigger_word: "p3r5on"
+      trigger_word: "sptgnmask"
       network:
         type: "lora"
         linear: 16
         linear_alpha: 16
       save:
         dtype: float16 # precision to save
-        save_every: 250 # save every this many steps
-        max_step_saves_to_keep: 4 # how many intermittent saves to keep
+        save_every: 400 # save every this many steps
+        max_step_saves_to_keep: 20 # how many intermittent saves to keep
         push_to_hub: false #change this to True to push your trained model to Hugging Face.
         # You can either set up a HF_TOKEN env variable or you'll be prompted to log-in         
 #       hf_repo_id: your-username/your-model-slug
@@ -31,7 +31,7 @@ config:
         # images will automatically be resized and bucketed into the resolution specified
         # on windows, escape back slashes with another backslash so
         # "C:\\path\\to\\images\\folder"
-        - folder_path: "/path/to/images/folder"
+        - folder_path: "/kaggle/input/datasetsjvds"
           caption_ext: "txt"
           caption_dropout_rate: 0.05  # will drop out the caption 5% of time
           shuffle_tokens: false  # shuffle caption order, split by commas
@@ -39,7 +39,7 @@ config:
           resolution: [ 512, 768, 1024 ]  # flux enjoys multiple resolutions
       train:
         batch_size: 1
-        steps: 2000  # total number of steps to train 500 - 4000 is a good range
+        steps: 2800  # total number of steps to train 500 - 4000 is a good range
         gradient_accumulation_steps: 1
         train_unet: true
         train_text_encoder: false  # probably won't work with flux
@@ -69,22 +69,15 @@ config:
 #        low_vram: true  # uncomment this if the GPU is connected to your monitors. It will use less vram to quantize, but is slower.
       sample:
         sampler: "flowmatch" # must match train.noise_scheduler
-        sample_every: 250 # sample every this many steps
+        sample_every: 400 # sample every this many steps
         width: 1024
         height: 1024
         prompts:
           # you can add [trigger] to the prompts here and it will be replaced with the trigger word
 #          - "[trigger] holding a sign that says 'I LOVE PROMPTS!'"\
-          - "woman with red hair, playing chess at the park, bomb going off in the background"
-          - "a woman holding a coffee cup, in a beanie, sitting at a cafe"
-          - "a horse is a DJ at a night club, fish eye lens, smoke machine, lazer lights, holding a martini"
-          - "a man showing off his cool new t shirt at the beach, a shark is jumping out of the water in the background"
-          - "a bear building a log cabin in the snow covered mountains"
-          - "woman playing the guitar, on stage, singing a song, laser lights, punk rocker"
-          - "hipster man with a beard, building a chair, in a wood shop"
-          - "photo of a man, white background, medium shot, modeling clothing, studio lighting, white backdrop"
-          - "a man holding a sign that says, 'this is a sign'"
-          - "a bulldog, in a post apocalyptic world, with a shotgun, in a leather jacket, in a desert, with a motorcycle"
+          - "[trigger] The image is a photograph of a person, likely a woman. She is wearing a white face mask that covers her nose and mouth, obscuring her lower face, with only her eyes visible. Her mask has a subtle pattern of abstract shapes and lines in shades of gray and white."
+          - "[trigger], 1girl, uhd, 4k, photorealistic, detailed, face detailed, black wall background, long realistic blurry wavy dark brown hair, pink v-neck chest expossed t-shirt, short sleeve, white face mask over mouth and nose, upper body, portrait"
+          - "[trigger] The image is a photograph of a person wearing a face mask and a headscarf. The individual is a woman with a medium skin tone and a medium-length, neatly styled haircut. She is wearing a light grey face mask that covers her nose and mouth, with a subtle pattern of horizontal lines in shades of pink and white."
         neg: ""  # not used on flux
         seed: 42
         walk_seed: true
