@@ -2,7 +2,7 @@
 job: extension
 config:
   # this name will be the folder and filename name
-  name: "sptgn-mask-lora"
+  name: "annisa-fatima"
   process:
     - type: 'sd_trainer'
       # root folder to save training sessions/samples/weights
@@ -12,7 +12,7 @@ config:
       device: cuda:0
       # if a trigger word is specified, it will be added to captions of training data if it does not already exist
       # alternatively, in your captions you can add [trigger] and it will be replaced with the trigger word
-      trigger_word: "sptgnmask"
+      trigger_word: "annisafatima"
       network:
         type: "lora"
         linear: 16
@@ -75,9 +75,9 @@ config:
         prompts:
           # you can add [trigger] to the prompts here and it will be replaced with the trigger word
 #          - "[trigger] holding a sign that says 'I LOVE PROMPTS!'"\
-          - "[trigger] The image is a photograph of a person, likely a woman. She is wearing a white face mask that covers her nose and mouth, obscuring her lower face, with only her eyes visible. Her mask has a subtle pattern of abstract shapes and lines in shades of gray and white."
-          - "[trigger], 1girl, uhd, 4k, photorealistic, detailed, face detailed, black wall background, long realistic blurry wavy dark brown hair, pink v-neck chest expossed t-shirt, short sleeve, white face mask over mouth and nose, upper body, portrait"
-          - "[trigger] The image is a photograph of a person wearing a face mask and a headscarf. The individual is a woman with a medium skin tone and a medium-length, neatly styled haircut. She is wearing a light grey face mask that covers her nose and mouth, with a subtle pattern of horizontal lines in shades of pink and white."
+          - "[trigger] This is a high-resolution photograph of a young Asian woman with a fair complexion and long, straight dark brown hair with subtle ombre highlights transitioning to lighter brown at the ends. Her hair cascades down past her shoulders, framing her face. She has a symmetrical face with a small, straight nose, almond-shaped brown eyes, and a slightly rounded face."
+          - "[trigger] The image is a high-resolution photograph featuring a young Asian woman standing outdoors. She has a light to medium skin tone and straight, dark brown hair that falls past her shoulders. Her facial features are delicate, with a small nose, full lips, and a subtle, natural makeup look that includes a touch of pink lipstick. She is wearing a lace-up, beige, long-sleeved dress with a floral pattern and a deep V-neckline."
+          - "[trigger] The image is a high-resolution photograph of a young Asian woman standing outdoors near a beach. She has a fair to light olive skin tone, with a clear, smooth complexion. Her hair is long, straight, and auburn with subtle highlights, styled in a natural, slightly messy look. She has a petite build, with a small to medium-sized frame, and is wearing a sleeveless white dress adorned with small, delicate floral patterns in shades of pink and red."
         neg: ""  # not used on flux
         seed: 42
         walk_seed: true
